@@ -14,7 +14,7 @@
     mysqli_query($conn, $queryUpdateProducts);
   }
   
-  $query ="DELETE FROM  carrito WHERE id_usuario = '$IdUser' and fechaIngreso = '$fechaHoy'";
+  $query ="DELETE FROM  carrito WHERE id_usuario = '$IdUser' and estado != 'Pagado'";
 
 if(mysqli_query($conn, $query)){
 	    echo "<script> 

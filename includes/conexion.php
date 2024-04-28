@@ -1,9 +1,9 @@
 <?php
-  $servername = "localhost";
+  $servername = "monorail.proxy.rlwy.net";
   $username = "root";
-  $password = "";
-  $dbname = "tienda_en_linea";
-  $port = 33065;
+  $password = "BnfsMAXrsyEMgJQbcUFjEuGuvwKyMNaS";
+  $dbname = "railway";
+  $port = 28734;
   
    $conn = new mysqli($servername, $username, $password, $dbname,$port);
   if ($conn->connect_error) {

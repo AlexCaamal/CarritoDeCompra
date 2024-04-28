@@ -6,7 +6,7 @@ $cant = $_GET['cantidad'];
   date_default_timezone_set('America/Costa_Rica');
   $fechaHoy = date("Y-m-d");
 
-  $query ="DELETE FROM  carrito WHERE id_producto = '$id' and id_usuario='$iduser' and fechaIngreso='$fechaHoy'";
+  $query ="DELETE FROM  carrito WHERE id_producto = '$id' and id_usuario='$iduser'";
 
   
 

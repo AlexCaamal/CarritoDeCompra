@@ -58,7 +58,7 @@
                   
                          if($carritoSubTotal == 0){?>
                 <p class="carrito-vacio">Tu carrito esta vacio</p>
-                <div class="carrito-acciones">
+                <div class="carrito-acciones" style="display: none;">
                     <div class="carrito-acciones-izquierda">
                         <a class="carrito-acciones-vaciar" readonly>Vaciar
                             carrito</a>
@@ -85,9 +85,11 @@
                             <p>TOTAL: </p>
                             <p><?php echo "$ ".$carritoSubTotal?></p>
                         </div>
-                        <a href="./../../crud/acceptedBuys.php?idUser=<?php echo $idUser;?>"
-                            class="carrito-acciones-comprar">Comprar
-                            ahora</a>
+                        <!-- <a href="./../../crud/acceptedBuys.php?idUser=<?php echo $idUser;?>"
+                            class="carrito-acciones-comprar">Pagar
+                            ahora</a> -->
+                            <a href="./metodo-pago.php"
+                            class="carrito-acciones-comprar">Siguiente</a> 
                     </div>
                 </div>
                 <?php 
