@@ -103,7 +103,7 @@ if ($metodoPago > 2) {
       return;
     }
   } else {
-    $updateFormaPago = "Update Tarjetas_Usuarios set Ubicacion = '$direccion', id_forma_pago = '$metodoPago', Numero_tarjeta= '$numTarjeta', cvv= '$cvv', Titular = '$metodoPago' where Id_Usuario = '$idUser' and id_forma_pago = '$metodoPago'";
+    $updateFormaPago = "Update Tarjetas_Usuarios set id_forma_pago = '$metodoPago', Numero_tarjeta= '$numTarjeta', cvv= '$cvv', Titular = '$metodoPago' where Id_Usuario = '$idUser' and id_forma_pago = '$metodoPago'";
     $resultsFormaPago = mysqli_query($conn, $updateFormaPago);
 
     if ($resultsFormaPago) {
@@ -125,7 +125,7 @@ $fechaHoy = date("Y-m-d");
 $products = "SELECT ca.id_producto, sum(ca.stock) as stock, sum(ca.stock*pro.Precio) as total 
 FROM  carrito ca 
 INNER JOIN productos pro on ca.id_producto = pro.id_producto
-WHERE id_usuario = '$idUser' and fechaIngreso = '$fechaHoy' group by id_producto";
+WHERE id_usuario = '$idUser' and ca.Estado = 'Activo' group by id_producto";
 $results = mysqli_query($conn, $products);
 while ($row = mysqli_fetch_array($results)) {
   $stockProduc = $row['stock'];
