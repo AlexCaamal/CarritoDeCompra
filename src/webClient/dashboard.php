@@ -47,7 +47,7 @@
                             <div
                                 style="display: flexbox; text-align: center; justify-items: center; aling-items: center;">
                                 <input type="number" style="width:30%; margin-left:35%;"
-                                    class="producto-precio form-control" name="cantidad" id="cantidad" min=1>
+                                    class="producto-precio form-control" name="cantidad" id="cantidad" min=1 required>
                             </div>
                             <?php
                             //idUser=idUser&idProducto=idProducto&cantidad=cantidad

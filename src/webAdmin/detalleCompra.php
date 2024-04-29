@@ -1,6 +1,15 @@
 <?php
 include('./../../includes/conexion.php');
+$idCompra = $_GET['idCompra'];
+
+if (!$idCompra) {
+    echo "<script> 
+    alert('La compra selecionada no es valida'); 
+    window.location = '../src/webAdmin/VentasProductos.php';
+    </script>";
+}
 ?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -34,17 +43,19 @@ include('./../../includes/conexion.php');
             </nav>
         </aside>
         <main>
-            <h2 class="titulo-principal">Todas las Ventas</h2>
-            <!-- <div class="btn-add-products">
-                <a href="./add_Products.php" type="button" class=" btn btn-outline-success">Añadir Nuevo producto</a>
-            </div> -->
+            <h2 class="titulo-principal">Detalles de la Compra</h2>
+            <div style="display: flex;" class="carrito-acciones">
+                <div class="carrito-acciones-izquierda">
+                    <a class="carrito-acciones-vaciar" href="./VentasProductos.php">Regresar</a>
+                </div>
+            </div>
             <?php
             $sql = "SELECT co.id_compra venta, co.cantidad cantidad, co.fechaCompra, 
             CONCAT(cli.nombre, ' ', cli.apellido) fullname, fr.MetodoPago metodo
             FROM compras co 
             inner JOIN clientes cli on co.id_usuario = cli.id 
             inner JOIN Metodo_Pago fr on co.id_forma_pago = fr.Id
-            ORDER BY co.fechaCompra desc ";
+            WHERE co.id_compra = '$idCompra'";
             $productQueyr = mysqli_query($conn, $sql);
             ?>
 
@@ -63,26 +74,52 @@ include('./../../includes/conexion.php');
                     echo '<td class="bg-white p-2">' . $row["cantidad"] . '</td>';
                     echo '<td class="bg-white p-2">' . strtoupper($row["fullname"]) . '</td>';
                     echo '<td class="bg-white p-2">' . strtoupper($row["metodo"]) . '</td>';
-                    echo '<td class="bg-white p-2">
-                    <a href="./detalleCompra.php?idCompra='.$row["venta"].'">
-                    <ion-icon name="eye-outline"></ion-icon>
-                    </a>
-
-                    </td>';
                     echo '</tr>';
                 }
                 ?>
             </table>
 
-        </main>
+            <div class=" carrito-productos">
 
+                <?php
+                $sqlProducts = "SELECT SUM(ca.Cantidad) as cantidad, pro.imagen, ca.id_producto, pro.nombre as nombre, pro.Precio as precio, SUM(ca.Cantidad * pro.Precio) as subtotal 
+                        FROM Detalle_Compra ca 
+                        INNER JOIN productos pro on ca.id_producto = pro.id_producto
+                        where id_compra = '$idCompra' group by ca.id_producto";
+                $result = mysqli_query($conn, $sqlProducts);
+                while ($row = mysqli_fetch_array($result)) {
+
+                ?>
+                    <div class="carrito-producto">
+                        <img class="carrito-producto-imagen" src="<?php echo $row['imagen']; ?>" alt="">
+                        <div class="carrito-producto-titulo">
+                            <small>Producto</small>
+                            <h3><?php echo $row['nombre']; ?></h3>
+                        </div>
+                        <div class="carrito-producto-cantidad">
+                            <small>Cantidad</small>
+                            <p><?php echo $row['cantidad']; ?></p>
+                        </div>
+                        <div class="carrito-producto-precio">
+                            <small>Precio</small>
+                            <p><?php echo $row['precio']; ?></p>
+                        </div>
+                        <div class="carrito-producto-subtotal">
+                            <small>Subtotal</small>
+                            <p><?php echo $row['subtotal']; ?></p>
+                        </div>
+                    </div>
+                <?php
+                }
+                ?>
+            </div>
+        </main>
     </div>
     <?php
-    include("./../../includes/foother.php");
+    include('../../includes/foother.php');
     ?>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-
 </body>
 
 </html>
