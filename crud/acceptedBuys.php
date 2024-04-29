@@ -58,19 +58,19 @@ if ($metodoPago > 2) {
         window.location = '../src/webClient/metodo-pago.php';
         </script>";
     return;
-  }else if(!preg_match('/^[0-9]+$/', $cvv)){
+  } else if (!preg_match('/^[0-9]+$/', $cvv)) {
     echo "<script>
         alert('El CVV solo debe ser númericos. Verifique...');  
         window.location = '../src/webClient/metodo-pago.php';
         </script>";
     return;
-  } else if(!preg_match('/^[0-9]+$/', $numTarjeta)){
+  } else if (!preg_match('/^[0-9]+$/', $numTarjeta)) {
     echo "<script>
         alert('El Número de Tarjeta solo debe ser númericos. Verifique...');  
         window.location = '../src/webClient/metodo-pago.php';
         </script>";
     return;
-  }else if(strlen($numTarjeta) > 16){
+  } else if (strlen($numTarjeta) > 16) {
     echo "<script>
         alert('El Número de Tarjeta solo debe tener 16 digitos. Verifique...');  
         window.location = '../src/webClient/metodo-pago.php';
@@ -122,6 +122,29 @@ if ($metodoPago > 2) {
 date_default_timezone_set('America/Costa_Rica');
 $fechaHoy = date("Y-m-d");
 
+$stockProduc = '';
+
+$countProductp = "SELECT sum(ca.stock) as stock
+FROM  carrito ca 
+WHERE id_usuario = '$idUser' and ca.Estado = 'Activo'";
+$resultscountProductp = mysqli_query($conn, $countProductp);
+while ($rowCountProductp = mysqli_fetch_array($resultscountProductp)) {
+  $stockProduc = $rowCountProductp['stock'];
+}
+$idCompra = 0;
+$compra = "INSERT INTO compras (id_usuario, cantidad, fechaCompra, id_forma_pago) VALUES ('$idUser','$stockProduc', '$fechaHoy', '$metodoPago')";
+$resultsCompra = mysqli_query($conn, $compra);
+if ($resultsCompra) {
+
+  $idCompra = mysqli_insert_id($conn);
+  
+}else{
+  echo "<script>
+  alert('Fallo al generar la Venta. Verifique...');  
+ window.location = '../src/webClient/dashboard.php';
+  </script>";
+}
+
 $products = "SELECT ca.id_producto, sum(ca.stock) as stock, sum(ca.stock*pro.Precio) as total 
 FROM  carrito ca 
 INNER JOIN productos pro on ca.id_producto = pro.id_producto
@@ -131,20 +154,34 @@ while ($row = mysqli_fetch_array($results)) {
   $stockProduc = $row['stock'];
   $idProduct = $row['id_producto'];
   $total = $row['total'];
-  $buys = "INSERT INTO compras (id_usuario, id_producto, cantidad, precio, id_forma_pago) VALUES ('$idUser', '$idProduct','$stockProduc', '$total', '$metodoPago')";
+  $buys = "INSERT INTO Detalle_Compra (id_producto, Cantidad, precio, id_compra) VALUES ('$idProduct','$stockProduc', '$total', '$idCompra')";
   mysqli_query($conn, $buys);
 }
-
-
-
 
 if (mysqli_query($conn, $products)) {
   $quitarStock = "UPDATE carrito SET Estado = 'Pagado' WHERE id_usuario='$idUser' and Estado='Activo'";
   mysqli_query($conn, $quitarStock);
 
+  /*$to = "nardinchuc271000@gmail.com";
+  $subject = "Asunto del correo";
+  $message = "Este es un mensaje de prueba desde PHP.";
+  $headers = "From: al063847@uacam.mx" . "\r\n" .
+             "Return.path: al063847@uacam.mx" . "\r\n" .
+             "X-Mailer: PHP/" . phpversion();*/
+
+  // Envía el correo electrónico
+  // $mail_sent = mail($to, $subject, $message, $headers);
+
+  // Verifica si el correo fue enviado correctamente
+  /*if ($mail_sent) {
+      echo "El correo ha sido enviado correctamente.";
+  } else {
+      echo "Error al enviar el correo.";
+  }*/
+
   echo "<script> 
         alert('Se Genero el pago correctamente!'); 
-        window.location = '../src/webClient/dashboard.php';
+        window.location = '../src/webClient/compras.php?id=$idUser';
         </script>";
 } else {
   echo "<script>

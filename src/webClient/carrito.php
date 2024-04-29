@@ -1,12 +1,17 @@
+
+<?php
+      include('./../../includes/conexion.php');
+      session_start();
+      $idUser =$_SESSION['user_id'];
+      
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <?php
-      include('./../../includes/conexion.php');
       include('./../../includes/head.php');
-      session_start();
-      $idUser =$_SESSION['user_id'];
       
 ?>
     <link rel="stylesheet" href="./../../css/main.css">
@@ -31,10 +36,10 @@
                 <ul>
                     <li><a class="boton-menu boton-volver" href="./dashboard.php"><i
                                 class="bi bi-arrow-return-left"></i>Seguir comprando</a></li>
-                    <li><a class="boton-menu boton-carrito active" href="./carrito.php"><i
+                    <li><a class="boton-menu boton-categoria active" href="./carrito.php"><i
                                 class="bi bi-cart-fill"></i>Carrito <span class="numero">
                                 <?php echo  $catCarrito ;?> </span></a></li>
-                    <br>
+                    <li><a class="boton-menu boton-categoria" href="./compras.php"><i class="bi bi-bag-fill"></i>Compras</a></li>
                     <li><a href="./../../includes/logout.php?user=Client"
                             class="boton-menu boton-categoria btn btn-danger"><i
                                 class=" bi bi-arrow-right-circle-fill"></i>Cerrar sesion</a></li>
@@ -54,8 +59,7 @@
                          while($row2 = mysqli_fetch_array($results)){
                             $carritoSubTotal = $row2['subtotal'];
                          }
-                        
-                  
+                                         
                          if($carritoSubTotal == 0){?>
                 <p class="carrito-vacio">Tu carrito esta vacio</p>
                 <div class="carrito-acciones" style="display: none;">
@@ -88,8 +92,7 @@
                         <!-- <a href="./../../crud/acceptedBuys.php?idUser=<?php echo $idUser;?>"
                             class="carrito-acciones-comprar">Pagar
                             ahora</a> -->
-                            <a href="./metodo-pago.php"
-                            class="carrito-acciones-comprar">Siguiente</a> 
+                            <a href="./metodo-pago.php?id=<?php echo $idUser; ?>"class="carrito-acciones-comprar">Siguiente</a> 
                     </div>
                 </div>
                 <?php 
@@ -107,7 +110,7 @@
                          
                           ?>
                     <div class="carrito-producto">
-                        <img class="carrito-producto-imagen" src="<?php echo "./../../img/".$row['imagen']; ?>" alt="">
+                        <img class="carrito-producto-imagen" src="<?php echo $row['imagen']; ?>" alt="">
                         <div class="carrito-producto-titulo">
                             <small>Producto</small>
                             <h3><?php echo $row['nombre'];?></h3>

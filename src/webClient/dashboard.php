@@ -31,7 +31,7 @@
                     $idProduct = $row['id_producto'];
                     ?>
                 <div class="producto">
-                    <img class="producto-imagen" src="<?php echo "./../../img/".$row['imagen']; ?>" alt="">
+                    <img class="producto-imagen" src="<?php echo $row['imagen']?>" alt="">
                     <form action="./../../crud/agregaCarrito.php" method="post">
                         <div class=" producto-detalles">
                             <h2><?php echo $row['nombre']; ?></h2>

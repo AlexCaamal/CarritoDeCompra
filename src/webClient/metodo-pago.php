@@ -1,13 +1,15 @@
+<?php
+      include('./../../includes/conexion.php');
+      $idUser = $_GET['id']
+      
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
     <?php
-    include('./../../includes/conexion.php');
     include('./../../includes/head.php');
-    session_start();
-    $idUser = $_SESSION['user_id'];
-
     ?>
     <link rel="stylesheet" href="./../../css/main.css">
 </head>

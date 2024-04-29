@@ -30,6 +30,7 @@
             ?>
 
             <br>
+
             <table class="table table-success table-striped">
                 <tr class="bg-gray-100 border-b-2 border-gray-200 p-2 text-center">
                     <th class="p-2">ID Venta</th>
@@ -50,7 +51,7 @@
 				echo'<td class="bg-white p-2">'.$row["stock"].'</td>';
 				echo'<td class="bg-white p-2">'.$row["Precio"].'</td>';
 				echo'<td class="bg-white p-2">'.$row["Estado"].'</td>';
-                echo'<td class="bg-white p-2"><img class="carrito-producto-imagen" src="./../../img/'.$row['imagen'].'" alt="">'.'</td>';
+                echo'<td class="bg-white p-2"><img class="carrito-producto-imagen" src="'.$row['imagen'].'" alt="">'.'</td>';
                 echo'<td class="bg-white p-2">
                     <a href="./plus_Products.php?idProducts='.$row["id_producto"].'">
                         <ion-icon name="add-circle-sharp"></ion-icon>
@@ -67,7 +68,6 @@
                 }
                 ?>
             </table>
-
         </main>
 
     </div>

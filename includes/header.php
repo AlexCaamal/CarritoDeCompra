@@ -29,14 +29,14 @@
           </header>
           <nav>
               <ul class="menu">
-                  <li><button class="boton-menu boton-categoria active"><i
+                  <li><button class="boton-menu boton-volver active"><i
                               class="bi bi-arrow-right-circle-fill"></i>Todos lo productos</button></li>
-                  <li><a class="boton-menu boton-carrito" href="./carrito.php"><i class="bi bi-cart-fill"></i>Carrito
+                  <li><a class="boton-menu boton-categoria" href="./carrito.php"><i class="bi bi-cart-fill"></i>Carrito
                           <span class="numero">
                               <?php
                                 echo $catCarrito;
                               ?> </span></a></li>
-                  <br>
+                  <li><a class="boton-menu boton-categoria" href="./compras.php"><i class="bi bi-bag-fill"></i>Compras</a></li>
                   <li><a href="./../../includes/logout.php?user=Client"
                           class="boton-menu boton-categoria btn btn-danger"><i
                               class=" bi bi-arrow-right-circle-fill"></i>Cerrar sesion</a></li>
