@@ -6,6 +6,13 @@
   $stockProduc=""; 
   
 
+if($cant == '' || $cant == null){
+  echo "<script> 
+  alert('Digite la Cantidad'); 
+  window.location = '../src/webClient/dashboard.php';
+  </script>";
+}
+
  $Products ="SELECT stock FROM productos WHERE id_producto='$idProduct'";
  $result = mysqli_query($conn,$Products);
   while($row = mysqli_fetch_array($result)){
